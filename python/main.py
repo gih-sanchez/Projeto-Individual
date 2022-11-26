@@ -12,3 +12,5 @@ else:
 output = array(output.split(), dtype='<U')
 
 print(output)
+
+bdProjeto.check_vuneravel(system)

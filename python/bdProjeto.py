@@ -1,14 +1,15 @@
 import pymssql 
 conexao = pymssql.connect(
     server='sptrack.database.windows.net', 
-   user='sptrackClient',
+     user='sptrackClient',
      password='Sprint2SPTrack', 
      database='SPTrack')  
 
 cursor = conexao.cursor()  
 
 def check_vuneravel(so):
- cursor.execute(f'select arquivos from Table where so = {so};')  
+
+ cursor.execute(f"select arquivos from antivirus where so = '{so}';")  
  row = cursor.fetchone()  
  while row:  
   print(row[0])
