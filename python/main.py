@@ -1,16 +1,19 @@
 import bdProjeto
 from  platform import system
-from subprocess import check_output
-from numpy import array
+from psutil import process_iter
+import os,time
 
-if(system() == "Windows"):
+rest = bdProjeto.ListaComportamento(system())
 
-  output = check_output("TASKLIST /NH /FO TABLE | SORT /R /+68'",shell=True)
-else:
-   output = check_output( "top -b -n 2 | sed -n '8, 12p' ",shell=True)
+while True:
+ 
+ for proc in process_iter() :
 
-output = array(output.split(), dtype='<U')
+  try:
+   if rest[1][0] in proc.name():
+     os.system(f" taskkill /PID {proc.pid} /F ")
+  
+  except:
+      pass
 
-print(output)
-
-bdProjeto.check_vuneravel(system)
+ time.sleep(3) 

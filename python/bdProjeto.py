@@ -1,4 +1,5 @@
 import pymssql 
+
 conexao = pymssql.connect(
     server='sptrack.database.windows.net', 
      user='sptrackClient',
@@ -7,10 +8,14 @@ conexao = pymssql.connect(
 
 cursor = conexao.cursor()  
 
-def check_vuneravel(so):
+def ListaComportamento(so):
+ proc = []
 
- cursor.execute(f"select arquivos from antivirus where so = '{so}';")  
- row = cursor.fetchone()  
+ cursor.execute(f"select arquivos,tipoProcesso from processos where so = '{so}' and tipoProcesso='blacklist';")  
+ row = cursor.fetchone()
+
  while row:  
-  print(row[0])
-  row = cursor.fetchone()  
+   proc.append(row)
+   row = cursor.fetchone()
+   
+ return proc
